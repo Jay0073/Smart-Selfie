@@ -2,16 +2,14 @@ import cv2
 
 # Initialize YuNet
 face_detector = cv2.FaceDetectorYN_create(
-    model="face_detection_yunet_2022mar.onnx",
+    model="face_detection_yunet_2023mar.onnx",
     config="",
-    input_size=(320, 320),
-    score_threshold=0.9,
+    input_size=(720, 720),
+    score_threshold=0.7,
     nms_threshold=0.3,
     top_k=5000,
     backend_id=cv2.dnn.DNN_BACKEND_DEFAULT,
     target_id=cv2.dnn.DNN_TARGET_CPU
-    # backend_id=3,
-    # target_id=0
 )
 
 def detect_faces(frame):
