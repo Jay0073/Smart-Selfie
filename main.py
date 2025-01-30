@@ -2,6 +2,9 @@ import cv2
 from keras import models as mod
 import numpy as np
 
+
+
+
 # load emotion model
 model = mod.load_model('emotion_model.h5')
 emotions = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral']
