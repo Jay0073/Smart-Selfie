@@ -1,3 +1,5 @@
+# just a sample of both of those workings
+
 import cv2
 
 import mediapipe as mp
@@ -66,26 +68,6 @@ def draw_landmarks_on_image(rgb_image, detection_result):
 
     return annotated_image
 
-def plot_face_blendshapes_bar_graph(face_blendshapes):
-    # Extract the face blendshapes category names and scores.
-    face_blendshapes_names = [face_blendshapes_category.category_name for face_blendshapes_category in face_blendshapes]
-    face_blendshapes_scores = [face_blendshapes_category.score for face_blendshapes_category in face_blendshapes]
-    # The blendshapes are ordered in decreasing score value.
-    face_blendshapes_ranks = range(len(face_blendshapes_names))
-
-    fig, ax = plt.subplots(figsize=(12, 12))
-    bar = ax.barh(face_blendshapes_ranks, face_blendshapes_scores, label=[str(x) for x in face_blendshapes_ranks])
-    ax.set_yticks(face_blendshapes_ranks, face_blendshapes_names)
-    ax.invert_yaxis()
-
-    # Label each bar with values
-    for score, patch in zip(face_blendshapes_scores, bar.patches):
-        plt.text(patch.get_x() + patch.get_width(), patch.get_y(), f"{score:.4f}", va="top")
-
-    ax.set_xlabel('Score')
-    ax.set_title("Face Blendshapes")
-    plt.tight_layout()
-    plt.show()
 
 
 def detect_faces(frame):
@@ -98,12 +80,8 @@ def detect_faces(frame):
             box = face[0:4].astype(int)
             # Draw rectangle around face
             cv2.rectangle(frame, box, (0, 255, 0), 2)
-
     
     return frame, faces
-
-
-
 
 # Camera capture loop
 cap = cv2.VideoCapture(0)
@@ -112,13 +90,15 @@ while True:
     if not ret:
         break
         
-    # frame, faces = detect_faces(frame)
-    # cv2.imshow('Face Detection', frame)
+    print(frame.shape)
+    print(frame)
+    frame, faces = detect_faces(frame)
+    cv2.imshow('Face Detection', frame)
 
 
-    image = mp.Image.create_from_file(frame)
-    annotated_image = detect_faces(image)
-    cv2.imshow(cv2.cvtColor(annotated_image, cv2.COLOR_RGB2BGR))
+    # image = mp.Image.create_from_file(frame)
+    # annotated_image = detect_faces(image)
+    # cv2.imshow(cv2.cvtColor(annotated_image, cv2.COLOR_RGB2BGR))
     
     if cv2.waitKey(1) & 0xFF == ord('x'):
         break
